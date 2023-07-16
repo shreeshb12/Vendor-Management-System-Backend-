@@ -1,0 +1,22 @@
+header{
+    background-color: #2e89ff;
+    padding: 5px;
+    display:flex;
+    justify-content: space-between;
+    position: relative;
+    color:#ffffff;
+    h1{
+        position: absolute;
+        top:0;
+        margin-top: 0;
+        left: 46vw;
+    }
+    h3{
+        margin:0;
+        padding:0;
+        color: #ffffff;
+    }
+    a{
+        text-decoration: none;
+    }
+}
