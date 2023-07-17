@@ -6,10 +6,7 @@ header{
     position: relative;
     color:#ffffff;
     h1{
-        position: absolute;
-        top:0;
-        margin-top: 0;
-        left: 46vw;
+        margin:5px;
     }
     h3{
         margin:0;
@@ -18,5 +15,8 @@ header{
     }
     a{
         text-decoration: none;
+    }
+    .buttons{
+        align-self: center ;
     }
 }

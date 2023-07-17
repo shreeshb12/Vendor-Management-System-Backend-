@@ -6,13 +6,12 @@ header {
   position: relative;
   color: #ffffff; }
   header h1 {
-    position: absolute;
-    top: 0;
-    margin-top: 0;
-    left: 46vw; }
+    margin: 5px; }
   header h3 {
     margin: 0;
     padding: 0;
     color: #ffffff; }
   header a {
     text-decoration: none; }
+  header .buttons {
+    align-self: center; }
