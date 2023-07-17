@@ -9,7 +9,7 @@
     <section id="feed-posts">
         <h4>Posts</h4>
         <form action="/posts/create" id="new-post-form" method="post">
-            <textarea name="content" rows="3" cols="30" placeholder="Add comment ..."></textarea>
+            <textarea name="content" rows="3" cols="30" placeholder="Post Here ..."></textarea>
             <input type="submit" value="Post">
         </form>
     </section>
@@ -18,7 +18,11 @@
             <%for(posts of post){%>
                 <li>
                     <h4><%=posts.content%></h4>
-                    <p>Posted by <%=posts.user.name%></p>
+                    <p>Posted by <%=posts.user.name%>
+                    <%if(locals.user.id == posts.user.id){%>
+                    <a href="/posts/destroy/<%=posts.id%>"><span color="red">X</span></a>
+                    <%}%>
+                </p>
                 </li>
                 <div class="post-comments">
                     <form action="/posts/comments/create" method="post">
