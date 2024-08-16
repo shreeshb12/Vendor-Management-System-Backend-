@@ -1,65 +1,39 @@
 const express=require("express");
-const app=express();
-const port=8000;
-const expressLayouts=require('express-ejs-layouts');
+require('dotenv').config();
+
+const router = express.Router();
 const db=require('./config/mongoose');
-const cookieParser=require('cookie-parser');
-const sassMiddleware=require('node-sass-middleware');
+const bodyParser=require('body-parser');
+const app=express();
 
-//used for session cookie
-const session=require('express-session');
-const passport=require('passport');
-const passportLocal=require('./config/passport-local-strategy');
-const MongoStore=require('connect-mongo');
-const { default: mongoose, connection } = require("mongoose");
+/* Middleware */
+const authMiddleware=require('./middleware/authMiddleware');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
-app.use(sassMiddleware({
-    src:'./assets/sass',
-    dest:'./assets/css',
-    debug: true,
-    outputStyle:'extended',
-    prefix:'/css'
-}))
-app.use(express.urlencoded())
-app.use(cookieParser());
-app.use(express.static('./assets'));
-// use layouts
-app.use(expressLayouts);
+/* ROUTE IMPORTS */
+const vendorRoutes =require('./routes/vendorRoutes');
+const purchaseOrderRoutes =require('./routes/vendorRoutes');
+const historicalPerformanceRoutes =require('./routes/vendorRoutes');
+const userRoutes=require('./routes/userRoute');
 
-app.set('layout extractStyles',true);
-app.set('layout extractScripts',true);
+/* ROUTES */
+app.use('api/auth', userRoutes);
+app.use('/api/vendors',authMiddleware,vendorRoutes);
+app.use('api/purchase-orders',authMiddleware, purchaseOrderRoutes);
+app.use('api/vendors',authMiddleware,historicalPerformanceRoutes);
 
-// set up the view engine
-app.set('view engine','ejs');
-app.set('views',"./views");
 
-// mongostore is used to store the cookie in db
-app.use(session({
-    name:'user_id',
-    secret:'Shreesh',
-    saveUninitialized:false,
-    resave:false,
-    cookie:{
-        maxAge:(1000*60*260*24)
-    },
-    store:MongoStore.create({
-        client:mongoose.connection.getClient(),
-        autoRemove:false
-    })
-}))
+app.get('/', (req, res) => {
+    res.send('Welcome to the Vendor Management System');
+});
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(passport.setAuthenticatedUser);
-//use express router
-app.use('/',require('./routes'));
-
-app.listen(port,(err)=>{
+/* SERVER */
+app.listen(process.env.PORT,(err)=>{
     if(err)
     {
         console.error(err);
         return;
     }
-    console.log(`Application is running at ${port}`);
+    console.log(`Server is running on ${process.env.PORT}`);
 })
