@@ -58,21 +58,19 @@ module.exports.deleteVendor = async (req, res) => {
       res.status(500).send(error);
     }
   };
-  
+
 // Calculate VendorPerformnce
   module.exports.getVendorPerformance = async (req, res) => {
     try {
       const vendorId = req.params.vendorId;
-  
+      
       // Find the vendor
       const vendor = await Vendor.findById(vendorId);
       if (!vendor) {
         return res.status(404).send({ message: 'Vendor not found' });
       }
-  
-      // Calculate and update performance metrics
-      await vendor.calculatePerformanceMetrics();
-  
+      
+      console.log(vendorId);
       // Respond with performance metrics
       res.status(200).send({
         onTimeDeliveryRate: vendor.onTimeDeliveryRate,

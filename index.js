@@ -13,15 +13,15 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 /* ROUTE IMPORTS */
 const vendorRoutes =require('./routes/vendorRoutes');
-const purchaseOrderRoutes =require('./routes/vendorRoutes');
-const historicalPerformanceRoutes =require('./routes/vendorRoutes');
+const purchaseOrderRoutes =require('./routes/purchaseOrderRoute');
+const historicalPerformanceRoutes =require('./routes/historicalPerformanceRoute');
 const userRoutes=require('./routes/userRoute');
 
 /* ROUTES */
-app.use('api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/api/vendors',authMiddleware,vendorRoutes);
-app.use('api/purchase-orders',authMiddleware, purchaseOrderRoutes);
-app.use('api/vendors',authMiddleware,historicalPerformanceRoutes);
+app.use('/api/purchase-orders',authMiddleware, purchaseOrderRoutes);
+app.use('/api/historicalPerformance',authMiddleware,historicalPerformanceRoutes);
 
 
 app.get('/', (req, res) => {
